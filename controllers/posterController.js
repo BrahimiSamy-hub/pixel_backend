@@ -63,6 +63,7 @@ const getPosters = async (req, res) => {
     const posters = await Poster.find({})
       .sort({ createdAt: -1 })
       .populate('mainImage')
+      .populate('category')
       .populate('sideImage')
       .populate({
         path: 'heroes',
@@ -79,9 +80,30 @@ const getPosters = async (req, res) => {
   }
 }
 
+const getSinglePoster = async (req, res) => {
+  const productId = req.params.id
+  try {
+    const product = await Product.findById(productId)
+      .populate('mainImage')
+      .populate('category')
+      .populate('sideImage')
+      .populate({
+        path: 'heroes',
+        populate: {
+          path: 'mainImage cardImage',
+          model: 'File',
+        },
+      })
+    res.status(200).json(product)
+  } catch (error) {
+    res.status(500).json({ error: 'Error getting Product' })
+  }
+}
+
 module.exports = {
   createPoster,
   updatePoster,
   deletePoster,
   getPosters,
+  getSinglePoster,
 }

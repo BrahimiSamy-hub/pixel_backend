@@ -40,5 +40,6 @@ router.put(
   posterController.updatePoster
 )
 router.delete('/:id', posterController.deletePoster)
+router.get('/:id', posterController.getSinglePoster)
 
 module.exports = router
