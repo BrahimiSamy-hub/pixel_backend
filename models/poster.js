@@ -25,6 +25,10 @@ const posterSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'File',
     },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+    },
     sideImage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'File',

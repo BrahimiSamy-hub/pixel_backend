@@ -34,11 +34,13 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 const posterRoutes = require('./routes/posterRoutes')
 const fileRoutes = require('./routes/fileRoutes')
 const orderRoutes = require('./routes/orderRoutes')
+const categoryRoutes = require('./routes/categoryRoutes')
 // Use Routes
 
 app.use('/posters', posterRoutes)
 app.use('/files', fileRoutes)
 app.use('/orders', orderRoutes)
+app.use('/categories', categoryRoutes)
 // Handle 404 errors
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Route not found' })

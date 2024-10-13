@@ -44,7 +44,6 @@ const createOrder = async (req, res) => {
         console.error('Failed to send message via Telegram:', err)
       })
 
-    console.log(order)
     res.status(201).json(order)
   } catch (error) {
     console.error('Error creating Order:', error)

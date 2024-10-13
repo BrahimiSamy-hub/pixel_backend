@@ -18,57 +18,19 @@ const createPoster = async (req, res) => {
 }
 
 const updatePoster = async (req, res) => {
-  const posterId = req.params.id
   try {
-    const {
-      id,
-      name,
-      href,
-      price,
-      dimension,
-      stock,
-      new: isNew,
-      sizes,
-      heroes,
-    } = req.body
-
-    // Process uploaded images
-    const images = req.files.map((file) => ({
-      imageSrc: `/uploads/${file.filename}`,
-      imageAlt: `Image for ${name}`,
-    }))
-
-    // Parse sizes and heroes from JSON strings
-    const parsedSizes = JSON.parse(sizes)
-    const parsedHeroes = JSON.parse(heroes).map((hero, index) => ({
-      ...hero,
-      imageSrc: images[index + 1]?.imageSrc || hero.imageSrc,
-      imageAlt: images[index + 1]?.imageAlt || hero.imageAlt,
-    }))
-
-    // Prepare updated data
-    const updatedData = {
-      name,
-      href,
-      price,
-      dimension,
-      stock,
-      new: isNew,
-      imageSrc: images[0].imageSrc, // Assuming the first image is the main image
-      imageAlt: images[0].imageAlt,
-      heroes: parsedHeroes,
-      sizes: parsedSizes,
-    }
-
-    const updatedPoster = await Poster.findByIdAndUpdate(
-      posterId,
-      updatedData,
-      { new: true }
-    )
-
-    if (!updatedPoster) {
+    // Find the poster by its ID
+    const poster = await Poster.findById(req.params.id)
+    if (!poster) {
       return res.status(404).json({ error: 'Poster not found' })
     }
+
+    // Update the poster's details with the new data from the request body
+    const updatedPoster = await Poster.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { new: true } // Return the updated document
+    )
 
     res.status(200).json(updatedPoster)
   } catch (error) {
