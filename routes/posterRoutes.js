@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 // Define routes
+router.get('/:id', posterController.getSinglePoster)
 router.post(
   '/',
 
@@ -40,6 +41,5 @@ router.put(
   posterController.updatePoster
 )
 router.delete('/:id', posterController.deletePoster)
-router.get('/:id', posterController.getSinglePoster)
 
 module.exports = router

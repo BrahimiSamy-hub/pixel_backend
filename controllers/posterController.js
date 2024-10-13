@@ -83,7 +83,7 @@ const getPosters = async (req, res) => {
 const getSinglePoster = async (req, res) => {
   const productId = req.params.id
   try {
-    const product = await Product.findById(productId)
+    const product = await Poster.findById(productId)
       .populate('mainImage')
       .populate('category')
       .populate('sideImage')
@@ -96,6 +96,7 @@ const getSinglePoster = async (req, res) => {
       })
     res.status(200).json(product)
   } catch (error) {
+    console.error(error)
     res.status(500).json({ error: 'Error getting Product' })
   }
 }
