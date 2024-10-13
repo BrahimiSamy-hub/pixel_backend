@@ -59,8 +59,13 @@ const deletePoster = async (req, res) => {
 }
 
 const getPosters = async (req, res) => {
+  const query = {}
+  if (req.query.category) {
+    query.category = req.query.category
+  }
+
   try {
-    const posters = await Poster.find({})
+    const posters = await Poster.find(query)
       .sort({ createdAt: -1 })
       .populate('mainImage')
       .populate('category')
